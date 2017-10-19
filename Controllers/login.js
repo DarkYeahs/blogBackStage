@@ -4,14 +4,20 @@ const ccap = require('ccap')
 
 /* GET home page. */
 router.get('/getVerificationCode', function(req, res, next) {
+
+  let randNum = Math.random()
+  randNum = Math.round(randNum * 10000)
+  if (randNum < 1000) randNum = '0' + randNum
+  else randNum = randNum + ''
+  console.log('test')
   var verificationCode = ccap({
-      width:400, //宽
-      height:400,//高
-      offset:40,//马赛克数值
+      width: 80,
+      height: 35,
+      offset: 20,
+	    quality: 100,
+      fontsize: 30,
       generate:function(){//自定义生成随机数
-          this.width;
-          this.height;
-          return "abcdefg";
+        return randNum
       }
   })
   var a = verificationCode.get()
@@ -19,7 +25,7 @@ router.get('/getVerificationCode', function(req, res, next) {
     code: 0,
     msg: 'success',
     data: {
-      url: 'data:image/bmp;base64,' + a[1].getFileData().toString('base64'),
+      url: 'data:image/bmp;base64,' + a[1].toString('base64'),
       code: a[0]
     }
   })
