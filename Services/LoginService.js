@@ -22,6 +22,17 @@ class LoginService {
       var a = verificationCode.get()
       return a
     }
+
+    login (account, password) {
+      console.log(account, password)
+      let promise = new Promise(function(resolve, reject) {
+        userDao.findOne({userName: account, password: password}).exec(function (err, adventure) {
+          if (err || !adventure) reject()
+          else resolve(adventure)
+        })
+      })
+      return promise
+    }
 }
 
 module.exports = LoginService

@@ -25,8 +25,23 @@ router.get('/getVerificationCode', function(req, res, next) {
   // res.send(a[1])
 });
 
-router.get('/login', function (req, res, next) {
-
+router.post('/login', function (req, res, next) {
+  let data = req.body
+  let account = data.account
+  let password = data.password
+  loginService.login(account, password)
+    .then(function(data) {
+      console.log(res)
+      res.json({
+        code: 0,
+        msg: 'success'
+      })
+    }).catch(function () {
+      res.json({
+        code: 400000000,
+        msg: 'success'
+      })
+    })
 })
 
 module.exports = router;
